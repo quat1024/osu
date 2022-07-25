@@ -34,6 +34,11 @@ namespace osu.Game.Rulesets.Taiko.Objects.Drawables
         /// </summary>
         private const double ring_appear_offset = 100;
 
+        /// <summary>
+        /// Whether alternating between centre and rim hits is required to hit the swell.
+        /// </summary>
+        public bool RequireAlternatingHits { get; set; } = true;
+
         private readonly Container<DrawableSwellTick> ticks;
         private readonly Container bodyContainer;
         private readonly CircularContainer targetRing;
@@ -278,7 +283,7 @@ namespace osu.Game.Rulesets.Taiko.Objects.Drawables
             bool isCentre = e.Action == TaikoAction.LeftCentre || e.Action == TaikoAction.RightCentre;
 
             // Ensure alternating centre and rim hits
-            if (lastWasCentre == isCentre)
+            if (RequireAlternatingHits && lastWasCentre == isCentre)
                 return false;
 
             lastWasCentre = isCentre;
